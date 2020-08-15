@@ -7,5 +7,7 @@ defmodule HelloWorldWeb.Router do
 
   scope "/api", HelloWorldWeb do
     pipe_through :api
+
+    resources "/projects", ProjectController, except: [:new, :edit]
   end
 end
