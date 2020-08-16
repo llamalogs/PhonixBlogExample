@@ -20,7 +20,7 @@ defmodule SimScript do
         {_status, body} = Jason.encode(%{project: %{name: name, status: "not started", type: type}})
         request = {'http://localhost:4000/api/projects', [], 'application/json', body}
         
-        {:ok, {{'HTTP/1.1', 201, 'Created'}, _headers, _body}} =
+        {:ok, {{'HTTP/1.1', _return_code, _return_status}, _headers, _body}} =
         :httpc.request(:post, request, [], [])
 
         IO.inspect "Created Project #{name}"
@@ -58,16 +58,19 @@ random_internal_names =
     Stream.repeatedly(fn -> SimScript.get_random_name() end) 
     |> Enum.take(10)
 
-SimScript.make_projects(random_internal_names, "internal")
+SimScript.make_projects(random_internal_names, "Internal")
 
 random_external_names = 
     Stream.repeatedly(fn -> SimScript.get_random_name() end) 
     |> Enum.take(5)
-    
-SimScript.make_projects(random_external_names, "external")
 
+# creating some example projects
+SimScript.make_projects(random_external_names, "External")
+# creating errors by trying to make projects with the same names
+SimScript.make_projects(random_external_names, "External")
+# sending get requests for each project
 SimScript.view_projects(random_internal_names)
 SimScript.view_projects(random_external_names)
-
+# updating the status of each project
 SimScript.update_projects(random_internal_names, "in progress")
 SimScript.update_projects(random_external_names, "in progress")

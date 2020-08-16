@@ -11,7 +11,8 @@ defmodule HelloWorld.Application do
       # Start the Ecto repository
       HelloWorld.Repo,
       # Start the endpoint when the application starts
-      HelloWorldWeb.Endpoint
+      HelloWorldWeb.Endpoint,
+      {LlamaLogs, ["YOUR_ACCOUNT_KEY", "YOUR_GRAPH_NAME"]}
       # Starts a worker by calling: HelloWorld.Worker.start_link(arg)
       # {HelloWorld.Worker, arg},
     ]
