@@ -10,6 +10,10 @@ defmodule HelloWorldWeb.ProjectView do
     %{data: render_one(project, ProjectView, "project.json")}
   end
 
+  def render("error.json", %{}) do 
+    %{}
+  end
+
   def render("project.json", %{project: project}) do
     %{id: project.id,
       name: project.name,

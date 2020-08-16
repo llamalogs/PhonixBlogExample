@@ -17,16 +17,21 @@ defmodule HelloWorldWeb.ProjectController do
       |> put_status(:created)
       |> put_resp_header("location", Routes.project_path(conn, :show, project))
       |> render("show.json", project: project)
+    else 
+      result -> 
+        conn 
+        |> put_status(:bad_request)
+        |> render("error.json", %{})
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    project = HelloProjects.get_project!(id)
+  def show(conn, %{"id" => name}) do
+    project = HelloProjects.get_project_by_name(name)
     render(conn, "show.json", project: project)
   end
 
-  def update(conn, %{"id" => id, "project" => project_params}) do
-    project = HelloProjects.get_project!(id)
+  def update(conn, %{"id" => name, "project" => project_params}) do
+    project = HelloProjects.get_project_by_name(name)
 
     with {:ok, %Project{} = project} <- HelloProjects.update_project(project, project_params) do
       render(conn, "show.json", project: project)

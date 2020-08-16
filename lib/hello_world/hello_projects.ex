@@ -37,6 +37,8 @@ defmodule HelloWorld.HelloProjects do
   """
   def get_project!(id), do: Repo.get!(Project, id)
 
+  def get_project_by_name(name), do: Repo.get_by(Project, name: name)
+
   @doc """
   Creates a project.
 
